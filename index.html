@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character set & responsive viewport configuration -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sangharsha Adhikari - Developer Portfolio</title>
+    <meta name="description" content="Bold sports-brand portfolio of Sangharsha Adhikari - Student, Developer, and Coder.">
+
+    <!-- Google Fonts: Anton (headlines) and Space Grotesk (body text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Link to external CSS stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Safeguard against browser extensions attempting to assign to getter-only window.fetch -->
+    <script>
+        try {
+            let _fetchRef = window.fetch;
+            Object.defineProperty(window, 'fetch', {
+                get() { return _fetchRef; },
+                set(fn) { _fetchRef = fn; },
+                configurable: true,
+                enumerable: true
+            });
+        } catch (_) {}
+    </script>
+</head>
+<body>
+    <!-- SVG Duotone filter: Turns grayscale photo into vibrant electric blue where hovered -->
+    <svg width="0" height="0" class="svg-filters" aria-hidden="true">
+        <filter id="duo-blue">
+            <feColorMatrix type="saturate" values="0"/>
+            <feComponentTransfer>
+                <feFuncR type="table" tableValues="0.02 0.12"/>
+                <feFuncG type="table" tableValues="0.02 0.45"/>
+                <feFuncB type="table" tableValues="0.06 1.0"/>
+            </feComponentTransfer>
+        </filter>
+    </svg>
+
+    <!-- 1. Fullscreen Hot Pink Loader with animated percentage count -->
+    <div id="loader" aria-live="polite">
+        <p>Loading Sangharsha</p>
+        <strong><span id="pct">0</span>%</strong>
+    </div>
+
+    <!-- 2. Fixed Header with brand name, Hall of Fame quick link, and menu toggle -->
+    <header class="top">
+        <h1 class="brand-heading">
+            <a href="#hero" class="brand" aria-label="Sangharsha Adhikari Home">SANGHARSHA<br>ADHIKARI</a>
+        </h1>
+        <div class="actions">
+            <a href="#fame" class="pill">Hall of Fame</a>
+            <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false">
+                <i></i>
+                <i></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Full-screen circular reveal navigation menu -->
+    <nav id="menu" aria-label="Main Navigation">
+        <a href="#hero">Home</a>
+        <a href="#message">Story</a>
+        <a href="#rail">Highlights</a>
+        <a href="#screens">On &amp; Off Screen</a>
+        <a href="#fame">Hall of Fame</a>
+        <a href="#numbers">Numbers</a>
+    </nav>
+
+    <!-- 3. Hero Section: Interactive duotone portrait, info card & hint -->
+    <section id="hero" class="hero">
+        <div class="stage" id="stage">
+            <img id="imgBase" alt="Portrait of Sangharsha Adhikari" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+            <canvas id="duoCanvas" class="duo" aria-hidden="true"></canvas>
+            <!-- Graphic silhouette icon shown when photo is loading or not set -->
+            <div class="stage-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="50" cy="35" r="22"/>
+                    <path d="M15 90c0-20 16-35 35-35s35 15 35 35"/>
+                </svg>
+            </div>
+        </div>
+        <aside class="info">
+            <small>Team captain</small>
+            <b>School basketball team</b>
+            <hr>
+            <span>Playing since 2020</span>
+        </aside>
+        <p class="hint">Hover over the portrait to reveal blue color where your mouse moves</p>
+    </section>
+
+    <!-- 4. Scrolling Ticker Marquee with 3 roles separated by star glyphs -->
+    <div class="marquee" aria-hidden="true">
+        <div>
+            <span>STUDENT &#10022; DEVELOPER &#10022; CODER &#10022;</span>
+            <span>STUDENT &#10022; DEVELOPER &#10022; CODER &#10022;</span>
+            <span>STUDENT &#10022; DEVELOPER &#10022; CODER &#10022;</span>
+            <span>STUDENT &#10022; DEVELOPER &#10022; CODER &#10022;</span>
+        </div>
+    </div>
+
+    <!-- 5. Story Section: Paragraph with word-by-word scroll illumination -->
+    <section id="message" class="message">
+        <p class="eyebrow">The story</p>
+        <p class="big">I was born and raised in Kathmandu and have been passionate about computers and technology. Being a grade 12 high school graduate, I am interested in learning software engineering and developing web applications along with learning computer programming skills.</p>
+    </section>
+
+    <!-- 6. Photo Strip: Horizontal rail pinned to vertical scrolling -->
+    <section id="rail" class="rail">
+        <div class="pin">
+            <div class="track" id="track">
+                <div class="tile txt">
+                    <h2>Class 12<br>graduate.</h2>
+                </div>
+                <figure class="tile ph a">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" alt="Science fair" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+                    <figcaption>Science fair</figcaption>
+                </figure>
+                <figure class="tile ph b">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80" alt="Basketball" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+                    <figcaption>Basketball</figcaption>
+                </figure>
+                <div class="tile txt pink">
+                    <h2>5+ project<br>completed.</h2>
+                </div>
+                <figure class="tile ph c">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" alt="Gym" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+                    <figcaption>Gym</figcaption>
+                </figure>
+                <div class="tile txt">
+                    <h2>Love to<br>workout.</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clean spacing gap between Photo Strip (5) and Screens (6) without underline -->
+    <div class="rail-screens-spacer" aria-hidden="true"></div>
+
+    <!-- 7. ON SCREEN and OFF SCREEN Blocks: Side-by-side with hover pink background -->
+    <section id="screens" class="screens">
+        <article>
+            <h2>ON<br>SCREEN</h2>
+            <p>I build responsive web applications and beginner software projects using HTML, CSS, JavaScript, and Python.</p>
+        </article>
+        <article>
+            <h2>OFF<br>SCREEN</h2>
+            <p>I go to the gym 5 days a week and play basketball during my free time.</p>
+        </article>
+    </section>
+
+    <!-- 8. Hall of Fame: 7 Interactive 3D flip cards with milestone achievements -->
+    <section id="fame" class="fame">
+        <h2 class="title">Hall of <span>Fame</span></h2>
+        <p class="sub">Tap or hover a card to flip it.</p>
+        <div class="cards" id="cards">
+            <!-- Card 1 -->
+            <div class="flip" tabindex="0" role="button" aria-label="2024 First Code milestone">
+                <div class="in">
+                    <div class="f">
+                        <b>2024</b>
+                        <h3>First Code</h3>
+                    </div>
+                    <div class="bk">
+                        <p>Wrote my first basic scripts in Python and explored fundamental programming logic.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="flip" tabindex="0" role="button" aria-label="2024 Web Foundations milestone">
+                <div class="in">
+                    <div class="f">
+                        <b>2024</b>
+                        <h3>Web Foundations</h3>
+                    </div>
+                    <div class="bk">
+                        <p>Started learning HTML, CSS, and JavaScript to build interactive user interfaces.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="flip" tabindex="0" role="button" aria-label="2025 Fitness Journey milestone">
+                <div class="in">
+                    <div class="f">
+                        <b>2025</b>
+                        <h3>Fitness Journey</h3>
+                    </div>
+                    <div class="bk">
+                        <p>Committed to structured gym workouts and daily discipline to build strength.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="flip" tabindex="0" role="button" aria-label="2026 High School Graduation milestone">
+                <div class="in">
+                    <div class="f">
+                        <b>2026</b>
+                        <h3>High School Graduation</h3>
+                    </div>
+                    <div class="bk">
+                        <p>Successfully completed secondary education in the Science stream under NEB.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="flip" tabindex="0" role="button" aria-label="2026 Personal Website milestone">
+                <div class="in">
+                    <div class="f">
+                        <b>2026</b>
+                        <h3>Personal Website</h3>
+                    </div>
+                    <div class="bk">
+                        <p>Built and deployed my interactive developer portfolio using HTML, CSS, JavaScript, and GitHub Pages.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="flip" tabindex="0" role="button" aria-label="2026 Practical Projects milestone">
+                <div class="in">
+                    <div class="f">
+                        <b>2026</b>
+                        <h3>Practical Projects</h3>
+                    </div>
+                    <div class="bk">
+                        <p>Designed custom functional web apps and tools to solve real-world problem challenges.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 7 -->
+            <div class="flip" tabindex="0" role="button" aria-label="2026 Computer Science Focus milestone">
+                <div class="in">
+                    <div class="f">
+                        <b>2026</b>
+                        <h3>Computer Science Focus</h3>
+                    </div>
+                    <div class="bk">
+                        <p>Continuously expanding programming skills in Python, web technologies, and software engineering concepts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Numbers: 4 key metrics with count-up animations on viewport entry -->
+    <section id="numbers" class="numbers">
+        <div>
+            <strong data-count="2026">0</strong>
+            <span>Grade 12 Graduate</span>
+        </div>
+        <div>
+            <strong data-count="5" data-suffix="+">0</strong>
+            <span>Projects Built</span>
+        </div>
+        <div>
+            <strong data-count="3">0</strong>
+            <span>Languages Spoken</span>
+        </div>
+        <div>
+            <strong data-count="2018">0</strong>
+            <span>Started Basketball</span>
+        </div>
+    </section>
+
+    <!-- 10. Footer: Bold statement, student credit note, and back to top pill button -->
+    <footer>
+        <h2>Made with respect.</h2>
+        <p>Built for my web design class by Sangharsha Adhikari. Grade 12 Science graduate &amp; aspiring software engineer.</p>
+        <a href="#hero" class="pill">Back to top</a>
+    </footer>
+
+    <!-- External JavaScript logic -->
+    <script src="script.js"></script>
+</body>
+</html>

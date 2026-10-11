@@ -1,0 +1,754 @@
+/* ==========================================================================
+   CSS VARIABLES & DESIGN SYSTEM
+   Theme: Bold Sports-Brand Portfolio
+   Colors: Off-white (#f1f0ea), Black ink (#101010), Hot pink (#ff2e93), Soft gray (#e2e0d6)
+   Hover spotlight accent: Electric blue (#2563eb)
+   ========================================================================== */
+:root {
+    --bg: #f1f0ea;
+    --ink: #101010;
+    --pink: #ff2e93;
+    --soft: #e2e0d6;
+    --blue: #2563eb;
+    --d: "Anton", Impact, sans-serif;
+}
+
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font: 1.05rem/1.6 "Space Grotesk", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Accessible focus visible outlines */
+:focus-visible {
+    outline: 3px solid var(--pink);
+    outline-offset: 3px;
+}
+
+/* Headline and big typography defaults */
+h1, h2, h3, b {
+    font-family: var(--d);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: .95;
+}
+
+/* Hidden SVG filters container */
+.svg-filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   1. LOADER SCREEN
+   Full hot pink screen with large Anton counter sliding upwards on completion
+   ========================================================================== */
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--pink);
+    display: grid;
+    place-content: center;
+    text-align: center;
+    transition: transform .9s cubic-bezier(.7, 0, .2, 1);
+}
+
+#loader.done {
+    transform: translateY(-100%);
+    pointer-events: none;
+}
+
+#loader p {
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+}
+
+#loader strong {
+    font: 8rem/1 var(--d);
+}
+
+/* ==========================================================================
+   2. FIXED HEADER & FULLSCREEN MENU
+   Stacked brand text, pink pill button, square hamburger, circle reveal
+   ========================================================================== */
+.top {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.2rem 1.5rem;
+    pointer-events: none;
+}
+
+.top > * {
+    pointer-events: auto;
+}
+
+.brand-heading {
+    margin: 0;
+    font: inherit;
+    line-height: inherit;
+}
+
+.brand {
+    font: 2rem/.9 var(--d);
+    letter-spacing: -.01em;
+    display: inline-block;
+}
+
+.actions {
+    display: flex;
+    gap: .6rem;
+    align-items: center;
+}
+
+/* Reusable bold pill button with hard offset shadow */
+.pill {
+    display: inline-block;
+    padding: .9rem 1.5rem;
+    background: var(--pink);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    font: 700 1rem "Space Grotesk", sans-serif;
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
+}
+
+.pill:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Square 2-line menu button */
+.menu-btn {
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--bg);
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    gap: 7px;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.menu-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+.menu-btn i {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: var(--ink);
+    transition: transform .3s, width .3s;
+}
+
+.menu-btn i:last-child {
+    width: 16px;
+    margin-left: auto;
+}
+
+.menu-btn[aria-expanded="true"] i:first-child {
+    transform: translateY(5px) rotate(45deg);
+}
+
+.menu-btn[aria-expanded="true"] i:last-child {
+    width: 26px;
+    transform: translateY(-5px) rotate(-45deg);
+}
+
+/* Circle reveal navigation overlay */
+#menu {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 8vw;
+    clip-path: circle(0 at calc(100% - 3rem) 3rem);
+    transition: clip-path .7s cubic-bezier(.7, 0, .2, 1);
+    visibility: hidden;
+}
+
+#menu.open {
+    clip-path: circle(150% at calc(100% - 3rem) 3rem);
+    visibility: visible;
+}
+
+#menu a {
+    font: clamp(2.6rem, 9vw, 6rem)/1.05 var(--d);
+    text-transform: uppercase;
+    color: var(--bg);
+    transition: padding .25s, color .25s;
+}
+
+#menu a:hover {
+    color: var(--pink);
+    padding-left: 1rem;
+}
+
+/* ==========================================================================
+   3. HERO SECTION
+   Topographic contour background, interactive duotone portrait
+   Photo is deep black; ONLY the specific area hovered by the mouse turns blue!
+   ========================================================================== */
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    overflow: hidden;
+    background: repeating-radial-gradient(ellipse at 28% 38%, transparent 0 34px, rgba(16, 16, 16, .06) 34px 35px),
+                repeating-radial-gradient(ellipse at 80% 80%, transparent 0 40px, rgba(16, 16, 16, .05) 40px 41px),
+                var(--bg);
+}
+
+/* Hero Stage: Portrait container remains black */
+.stage {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 0;
+    height: 90%;
+    aspect-ratio: 3/4;
+    translate: -50% 0;
+    --cut: 50;
+    background: var(--ink); /* Strictly black background */
+    border: 3px solid var(--ink);
+    border-bottom: 0;
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+/* Base image is strictly black monochrome / grayscale across the entire picture */
+.stage img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+    z-index: 1;
+    filter: grayscale(100%) contrast(1.25) brightness(0.85);
+}
+
+/* The duo canvas renders the masked blue spotlight ONLY where the mouse is */
+.stage canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Blue duotone filter applied strictly to the liquid cursor mask */
+.stage .duo {
+    filter: url(#duo-blue) contrast(1.3);
+}
+
+/* Slanted parallelogram fallback frame when photo is not a transparent cutout */
+.stage.no-cutout {
+    clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+    border-radius: 0;
+}
+
+.stage.no-cutout img {
+    object-fit: cover;
+    object-position: top;
+}
+
+/* Silhouette graphic inside stage when custom photo is absent */
+.stage-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    opacity: .35;
+    pointer-events: none;
+}
+
+.stage-placeholder svg {
+    width: 60%;
+    height: 60%;
+}
+
+/* Hero Corner Info Card */
+.info {
+    position: absolute;
+    z-index: 3;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    width: 210px;
+    padding: 1.2rem;
+    border: 2px solid var(--ink);
+    border-radius: 10px 10px 10px 40px;
+    background: var(--bg);
+    box-shadow: 3px 3px 0 var(--ink);
+}
+
+.info small {
+    display: block;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    font-size: .8rem;
+    color: var(--pink);
+}
+
+.info b {
+    display: block;
+    font-size: 1.35rem;
+    margin: .4rem 0;
+}
+
+.info hr {
+    border: 0;
+    border-top: 2px solid var(--ink);
+    margin: .6rem 0;
+}
+
+.info span {
+    font-size: .85rem;
+    font-weight: 500;
+}
+
+.hint {
+    position: absolute;
+    z-index: 3;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    font-size: .85rem;
+    font-weight: 500;
+    background: rgba(241, 240, 234, 0.9);
+    padding: .3rem .8rem;
+    border: 1px solid var(--ink);
+    border-radius: 6px;
+}
+
+/* ==========================================================================
+   4. TICKER MARQUEE
+   Black background with hot pink Anton uppercase roles separated by stars
+   ========================================================================== */
+.marquee {
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--pink);
+    white-space: nowrap;
+    font: 2.4rem var(--d);
+    text-transform: uppercase;
+    padding: .6rem 0;
+    border-block: 2px solid var(--ink);
+}
+
+.marquee div {
+    display: inline-flex;
+    animation: run 24s linear infinite;
+}
+
+.marquee span {
+    padding-right: 1.8rem;
+}
+
+@keyframes run {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* ==========================================================================
+   5. STORY SECTION
+   Word-by-word scroll lighting effect
+   ========================================================================== */
+.message {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem;
+}
+
+.eyebrow {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--pink);
+    margin-bottom: 1.5rem;
+}
+
+.big {
+    font: 500 clamp(1.7rem, 4.2vw, 3.2rem)/1.2 "Space Grotesk", sans-serif;
+}
+
+.big .w {
+    opacity: .18;
+    transition: opacity .3s ease;
+}
+
+.big .w.lit {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   6. PHOTO STRIP (HORIZONTAL RAIL DRIVEN BY VERTICAL SCROLL)
+   Sticky pin scrolling horizontal track with photo cards & Anton text tiles
+   ========================================================================== */
+.rail {
+    height: 360vh;
+}
+
+.pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.track {
+    display: flex;
+    gap: 2.5rem;
+    padding: 0 8vw;
+    will-change: transform;
+}
+
+.tile {
+    flex: 0 0 auto;
+}
+
+.tile.txt {
+    display: grid;
+    align-content: center;
+    min-width: 38vw;
+}
+
+.tile.txt h2 {
+    font-size: clamp(4rem, 12vw, 10rem);
+}
+
+.tile.pink {
+    background: var(--pink);
+    padding: 2.5rem 3.5rem;
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    box-shadow: 6px 6px 0 var(--ink);
+}
+
+.tile.ph {
+    position: relative;
+    margin: 0;
+    width: min(380px, 70vw);
+    aspect-ratio: 4/5;
+    background: var(--soft);
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+.tile.ph.b {
+    margin-top: 12vh;
+    width: min(340px, 65vw);
+}
+
+.tile.ph.c {
+    margin-top: -10vh;
+}
+
+.tile.ph img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tile.ph figcaption {
+    position: absolute;
+    left: .8rem;
+    bottom: .8rem;
+    background: var(--bg);
+    border: 2px solid var(--ink);
+    border-radius: 99px;
+    padding: .3rem 1rem;
+    font-weight: 700;
+    font-size: .9rem;
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Spacer gap between 5 and 6 without underline (as requested) */
+.rail-screens-spacer {
+    height: 4rem;
+    background: transparent;
+}
+
+/* ==========================================================================
+   7. ON SCREEN & OFF SCREEN BLOCKS
+   Side-by-side with thick borders, turns pink on hover
+   ========================================================================== */
+.screens {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-block: 3px solid var(--ink);
+}
+
+.screens article {
+    padding: 5rem 3rem;
+    transition: background-color .3s;
+}
+
+.screens article + article {
+    border-left: 3px solid var(--ink);
+}
+
+.screens article:hover {
+    background: var(--pink);
+}
+
+.screens h2 {
+    font-size: clamp(4rem, 11vw, 9rem);
+    margin-bottom: 1.5rem;
+}
+
+.screens p {
+    max-width: 36ch;
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   8. HALL OF FAME
+   Grid of 7 3D flip cards (Soft gray front with outlined year, Hot pink back)
+   ========================================================================== */
+.fame {
+    padding: 7rem 1.5rem 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: clamp(3.5rem, 11vw, 9rem);
+}
+
+.title span {
+    color: var(--pink);
+    -webkit-text-stroke: 2px var(--ink);
+}
+
+.sub {
+    margin: .5rem 0 2.5rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.flip {
+    perspective: 900px;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+}
+
+.in {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform .7s cubic-bezier(.2, .8, .2, 1);
+    transform-style: preserve-3d;
+}
+
+.flip:hover .in,
+.flip:focus-visible .in,
+.flip.on .in {
+    transform: rotateY(180deg);
+}
+
+.f, .bk {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+.f {
+    background: var(--soft);
+}
+
+.f b {
+    font-size: 4.5rem;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink);
+}
+
+.f h3 {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.bk {
+    background: var(--pink);
+    transform: rotateY(180deg);
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   9. NUMBERS SECTION
+   Key metrics counting up with thick top border and giant Anton numerals
+   ========================================================================== */
+.numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 3rem 1.5rem 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.numbers div {
+    border-top: 3px solid var(--ink);
+    padding-top: 1.2rem;
+}
+
+.numbers strong {
+    display: block;
+    font: 5.5rem/1 var(--d);
+    color: var(--ink);
+}
+
+.numbers span {
+    font-weight: 500;
+    font-size: 1.15rem;
+    text-transform: capitalize;
+}
+
+/* ==========================================================================
+   10. FOOTER
+   Dark theme section with pink Anton heading, class note, and back-to-top pill
+   ========================================================================== */
+footer {
+    background: var(--ink);
+    color: var(--bg);
+    text-align: center;
+    padding: 6rem 1.5rem 4rem;
+}
+
+footer h2 {
+    font-size: clamp(3rem, 10vw, 8rem);
+    color: var(--pink);
+    margin-bottom: 1.5rem;
+}
+
+footer p {
+    max-width: 60ch;
+    margin: 0 auto 2.5rem;
+    font-size: 1rem;
+    color: #bdbab0;
+    line-height: 1.6;
+}
+
+footer .pill {
+    color: var(--ink);
+    background: var(--pink);
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   Optimized for mobile phones and tablet viewports
+   ========================================================================== */
+@media (max-width: 768px) {
+    .brand {
+        font-size: 1.5rem;
+    }
+    .pill {
+        padding: .7rem 1rem;
+    }
+    .stage {
+        height: 70%;
+    }
+    .info {
+        width: 160px;
+        padding: .8rem;
+    }
+    .info b {
+        font-size: 1.1rem;
+    }
+    .hint {
+        display: none;
+    }
+    .screens {
+        grid-template-columns: 1fr;
+    }
+    .screens article {
+        padding: 3rem 1.5rem;
+    }
+    .screens article + article {
+        border-left: 0;
+        border-top: 3px solid var(--ink);
+    }
+    #loader strong {
+        font-size: 5rem;
+    }
+    .cards {
+        grid-template-columns: 1fr;
+    }
+    .numbers {
+        grid-template-columns: 1fr 1fr;
+    }
+    .tile.txt {
+        min-width: 60vw;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation: none !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
